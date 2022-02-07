@@ -1,0 +1,10 @@
+POST http://127.0.0.1:5000/api/superheroes/
+Content-Type: application/json
+
+{
+        "nickname": "WONDER WOMAN", 
+        "real_name": "Diana Prince", 
+        "origin_description": "For thousands of years has existed a race of warrior women called the Amazons on a remote island called Themyscira. This race was created when the Greek gods rescued the souls of every woman who had been slain by a man, however one soul was left behind..",
+        "superpowers": ["strength", "durability", "invulnerability to physical harm", "flight"],
+        "catch_phrase": "I will fight for those who cannot fight for themselves."
+}

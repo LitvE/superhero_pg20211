@@ -2,10 +2,12 @@ const { Superhero }  = require('./../models')
 
 
 module.exports.createSuperhero = async (req, res, next) =>{
+    //const { file } = req;
+    //console.log(req.file);
     try{
         const newSuperhero = await Superhero.create(req.body);
         if(newSuperhero){
-            return res.status(201).send(newSuperhero);
+            return res.status(201).send({data: newSuperhero});
         }
         return next(new Error());
 
@@ -17,9 +19,6 @@ module.exports.createSuperhero = async (req, res, next) =>{
 module.exports.getSuperheroById = async (req, res, next) =>{
     try{
         const shToFind = await Superhero.findByPk(req.params.shId, {
-            // attributes: {
-            //   exclude: ['id'],
-            // },
         });
 
         if (shToFind) {
@@ -33,12 +32,11 @@ module.exports.getSuperheroById = async (req, res, next) =>{
 
 module.exports.getSuperheroes = async (req, res, next) => {
     try {
+      const page = req.query.page;
       const foundSh = await Superhero.findAll({
         raw: true,
-        attributes: {
-          exclude: ['id'],
-        },
         limit: 5,
+        offset: (page-1)*5,
       });
       res.status(200).send({ data: foundSh });
     } catch (e) {
@@ -62,7 +60,7 @@ module.exports.deleteSuperheroById = async (req, res, next) => {
     }
 }
 
-module.exports.updateSuperheroById = async (req, res, next) => {
+module.exports.updateSuperheroInfoById = async (req, res, next) => {
     try {
         const [updRowsCount, updRows] = await Superhero.update(req.body, {
           where: {
@@ -79,3 +77,38 @@ module.exports.updateSuperheroById = async (req, res, next) => {
         next(e);
       }
 }
+
+module.exports.updateImageById = async (req, res, next) => {
+  const { file } = req;
+  try {
+    const shToUpdate = await Superhero.findByPk(req.params.shId);
+    if (shToUpdate) {
+      shToUpdate.images.push(file.filename);
+      const [updRowCount, [updFoundSuperheroes]] = await Superhero.update(
+        shToUpdate.get(),
+        { where: { id: req.params.shId }, returning: true }
+      );
+      return res.status(200).send({ data: updFoundSuperheroes });
+    }
+    res.status(404).send('Superhero is not found');
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.updatePowersById = async (req, res, next) => {
+  try {
+    const shToUpdate = await Superhero.findByPk(req.params.shId);
+    if (shToUpdate) {
+      shToUpdate.superpowers.push(req.body.superpowers);
+      const [updRowCount, [updFoundSuperheroes]] = await Superhero.update(
+        shToUpdate.get(),
+        { where: { id: req.params.shId }, returning: true }
+      );
+      return res.status(200).send({ data: updFoundSuperheroes });
+    }
+    res.status(404).send('Superhero is not found');
+  } catch (err) {
+    next(err);
+  }
+};
