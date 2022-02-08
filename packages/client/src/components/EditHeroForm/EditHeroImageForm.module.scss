@@ -1,0 +1,24 @@
+.formStyle{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.formItem{
+    margin: 10px;
+}
+
+
+.fieldStyle{
+    height: 30px;
+}
+
+.formStyle label  span {
+    padding-right: 10px;
+}
+
+.btnStyle{
+    width: 100px;
+    height: 30px;
+}

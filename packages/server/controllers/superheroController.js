@@ -22,7 +22,7 @@ module.exports.getSuperheroById = async (req, res, next) =>{
         });
 
         if (shToFind) {
-            return res.status(201).send(shToFind);
+            return res.status(201).send({data: shToFind});
         }
         return next(new Error());
     }catch(e){
