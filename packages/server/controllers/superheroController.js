@@ -2,8 +2,6 @@ const { Superhero }  = require('./../models')
 
 
 module.exports.createSuperhero = async (req, res, next) =>{
-    //const { file } = req;
-    //console.log(req.file);
     try{
         const newSuperhero = await Superhero.create(req.body);
         if(newSuperhero){
@@ -60,24 +58,6 @@ module.exports.deleteSuperheroById = async (req, res, next) => {
     }
 }
 
-module.exports.updateSuperheroInfoById = async (req, res, next) => {
-    try {
-        const [updRowsCount, updRows] = await Superhero.update(req.body, {
-          where: {
-            id: req.params.shId,
-          },
-          returning: true,
-        });
-        if (updRowsCount) {
-          const data = updRows.get();
-          return res.status(201).send(data);
-        }
-        return next(new Error());
-      } catch (e) {
-        next(e);
-      }
-}
-
 module.exports.updateImageById = async (req, res, next) => {
   const { file } = req;
   try {
@@ -100,7 +80,7 @@ module.exports.updatePowersById = async (req, res, next) => {
   try {
     const shToUpdate = await Superhero.findByPk(req.params.shId);
     if (shToUpdate) {
-      shToUpdate.superpowers.push(req.body.superpowers);
+      shToUpdate.superpowers.push(req.body.superpower);
       const [updRowCount, [updFoundSuperheroes]] = await Superhero.update(
         shToUpdate.get(),
         { where: { id: req.params.shId }, returning: true }

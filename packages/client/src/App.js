@@ -4,6 +4,7 @@ import NewHeroForm from './components/NewHeroForm';
 import SuperheroesLoad from './components/SuperheroesLoad';
 import SuperheroLoad from './components/SuperheroLoad';
 import EditHeroImageForm from './components/EditHeroForm/EditHeroImageForm';
+import EditHeroPowerForm from './components/EditHeroForm/EditHeroPowersForm/EditHeroPowerForm';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
             <Route exact path="/" element={<SuperheroesLoad />}/>
             <Route exact path ="/create" element={<NewHeroForm />}/>
             <Route exact path="/addImage/:id" element={<EditHeroImageForm />}/>
-            <Route exact path="/addPowers/:id" element={<h2>Element Not Fount</h2>}/>
+            <Route exact path="/addPowers/:id" element={<EditHeroPowerForm />}/>
             <Route exact path=":id" element={<SuperheroLoad />} />
           </Routes>
         </div>

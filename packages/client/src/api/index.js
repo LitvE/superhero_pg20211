@@ -7,6 +7,7 @@ export const getSuperheroes = (page) => apiInstance.get(`/superheroes?page=${pag
 export const getSuperheroById = (id) => apiInstance.get(`/superheroes/${id}`);
 export const createSuperhero = (superhero) => apiInstance.post('/superheroes', superhero);
 export const deleteSuperhero = (id) => apiInstance.delete(`/superheroes/${id}`);
+export const updateSuperheroPowers = (id, power) => apiInstance.patch(`/superheroes/${id}`, power);
 export const updateSuperheroImage = (id, data) => apiInstance.patch(`/superheroes/${id}/images`, data,  {
     headers: {
         "Content-type": "multipart/form-data"
